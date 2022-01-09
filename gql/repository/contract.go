@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/yudhapratama10/search-gql/graph/model"
+	"github.com/yudhapratama10/search-gql/gql/model"
 )
 
 type footballRepository struct {

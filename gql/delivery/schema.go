@@ -1,4 +1,4 @@
-package handler
+package delivery
 
 import (
 	"github.com/graphql-go/graphql"
@@ -47,7 +47,7 @@ func (s Schema) Query() *graphql.Object {
 	objectConfig := graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
-			"Search": &graphql.Field{
+			"search": &graphql.Field{
 				Type:        graphql.NewList(SearchResultGraphQL),
 				Description: "Search Football Club",
 				Args: graphql.FieldConfigArgument{

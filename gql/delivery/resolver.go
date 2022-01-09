@@ -1,8 +1,8 @@
-package handler
+package delivery
 
 import (
 	"github.com/graphql-go/graphql"
-	"github.com/yudhapratama10/search-gql/graph/usecase"
+	"github.com/yudhapratama10/search-gql/gql/usecase"
 )
 
 type resolver struct {
@@ -30,8 +30,8 @@ func (r resolver) Search(params graphql.ResolveParams) (interface{}, error) {
 		keyword = keywordFromClients
 	}
 
-	if stadiumFromClients, ok := params.Args["hasstadium"].(bool); ok {
-		hasstadium = stadiumFromClients
+	if hasStadiumFromClients, ok := params.Args["hasstadium"].(bool); ok {
+		hasstadium = hasStadiumFromClients
 	}
 
 	if pageFromClients, ok := params.Args["page"].(int); ok {

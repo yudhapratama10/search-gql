@@ -1,23 +1,5 @@
 scalar Time
 
-type Article {
-    ID: Int
-    Title: String
-    Content: String
-    UpdatedAt: Time
-    CreatedAt: Time
-}
-
-type Edge {
-    cursor: String
-    node: Article
-}
-
-type PageInfo {
-    endCursor: String
-    hasNextPage: Boolean
-}
-
 type SearchResult {
     id: String
     name: String

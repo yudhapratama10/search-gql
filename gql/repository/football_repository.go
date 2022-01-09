@@ -2,12 +2,11 @@ package repository
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
 
-	"github.com/yudhapratama10/search-gql/graph/model"
+	"github.com/yudhapratama10/search-gql/gql/model"
 )
 
 // Service Base URL
@@ -48,8 +47,6 @@ func (repo *footballRepository) Search(keyword string, hasStadium bool, page, ta
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(err)
 
 	return res, nil
 }

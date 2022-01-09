@@ -4,39 +4,17 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/cors"
-	"github.com/go-chi/render"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
-	gql_handler "github.com/yudhapratama10/search-gql/graph/handler"
-	"github.com/yudhapratama10/search-gql/graph/repository"
-	"github.com/yudhapratama10/search-gql/graph/usecase"
+	"github.com/yudhapratama10/search-gql/gql/delivery"
+	"github.com/yudhapratama10/search-gql/gql/repository"
+	"github.com/yudhapratama10/search-gql/gql/usecase"
 )
 
-// func init() {
-// 	err := godotenv.Load()
-// 	if err != nil {
-// 		panic("No .env file specified.")
-// 	}
-// }
-
 func main() {
-	httpRouter := chi.NewRouter()
-	//db := db.InitDB()
-
-	httpRouter.Use(middleware.Logger)
-	httpRouter.Use(render.SetContentType(render.ContentTypeJSON))
-	httpRouter.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"POST", "GET"}, // Only allowing POST/GET because GQL only accept POST & GET
-		AllowedHeaders: []string{"X-PINGOTHER", "Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-	}))
-
 	repo := repository.NewFootballRepository()
 	usecase := usecase.NewFootballUsecase(repo)
-	schema := gql_handler.NewSchema(gql_handler.NewResolver(usecase))
+	schema := delivery.NewSchema(delivery.NewResolver(usecase))
 
 	graphqlSchema, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: schema.Query(),
@@ -48,12 +26,27 @@ func main() {
 	}
 
 	gqlHandler := handler.New(&handler.Config{
-		Schema:   &graphqlSchema,
-		GraphiQL: true,
-		Pretty:   true,
+		Schema:     &graphqlSchema,
+		GraphiQL:   false,
+		Pretty:     true,
+		Playground: true,
 	})
 
-	http.Handle("/graphql", gqlHandler)
+	http.Handle("/graphql", CorsMiddleware(gqlHandler))
+	log.Println("Starting Service-GQL at port 8081")
 	log.Fatal(http.ListenAndServe(":8081", nil))
+}
 
+// CORS Handler
+func CorsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }

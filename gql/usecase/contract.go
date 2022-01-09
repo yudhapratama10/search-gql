@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/yudhapratama10/search-gql/graph/model"
-	"github.com/yudhapratama10/search-gql/graph/repository"
+	"github.com/yudhapratama10/search-gql/gql/model"
+	"github.com/yudhapratama10/search-gql/gql/repository"
 )
 
 type footballUsecase struct {

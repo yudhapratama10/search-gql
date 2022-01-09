@@ -1,9 +1,7 @@
 package usecase
 
 import (
-	"fmt"
-
-	"github.com/yudhapratama10/search-gql/graph/model"
+	"github.com/yudhapratama10/search-gql/gql/model"
 )
 
 func (usecase *footballUsecase) Search(keyword string, isPreOrder bool, page, take int) ([]model.Product, error) {
@@ -12,7 +10,7 @@ func (usecase *footballUsecase) Search(keyword string, isPreOrder bool, page, ta
 		return []model.Product{}, err
 	}
 
-	fmt.Println(data)
+	// fmt.Println(data)
 
 	return data, nil
 
