@@ -15,3 +15,13 @@ func (usecase *footballUsecase) Search(keyword string, isPreOrder bool, page, ta
 	return data, nil
 
 }
+
+func (usecase *footballUsecase) Autocomplete(keyword string) ([]model.Product, error) {
+	data, err := usecase.repo.Autocomplete(keyword)
+	if err != nil {
+		return []model.Product{}, err
+	}
+
+	return data, nil
+
+}

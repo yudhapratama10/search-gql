@@ -9,6 +9,7 @@ type footballRepository struct {
 
 type FootballRepositoryContract interface {
 	Search(keyword string, hasStadium bool, page, take int) ([]model.Product, error)
+	Autocomplete(keyword string) ([]model.Product, error)
 }
 
 func NewFootballRepository() FootballRepositoryContract {

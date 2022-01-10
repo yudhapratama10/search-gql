@@ -50,3 +50,42 @@ func (repo *footballRepository) Search(keyword string, hasStadium bool, page, ta
 
 	return res, nil
 }
+
+func (repo *footballRepository) Autocomplete(keyword string) ([]model.Product, error) {
+	var err error
+	var client = &http.Client{}
+	var res []model.Product
+
+	// req, err := json.Marshal(model.ProductParams{
+	// 	Keyword:    keyword,
+	// 	HasStadium: hasStadium,
+	// 	Page:       page,
+	// 	Take:       take,
+	// })
+
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// request, err := http.NewRequest("GET", baseURL+"/search", bytes.NewBuffer(req))
+
+	params := "keyword=" + url.QueryEscape(keyword)
+
+	request, err := http.NewRequest("GET", baseURL+"/autocomplete?"+params, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := client.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	err = json.NewDecoder(response.Body).Decode(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

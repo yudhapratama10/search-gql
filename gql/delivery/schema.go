@@ -66,6 +66,16 @@ func (s Schema) Query() *graphql.Object {
 				},
 				Resolve: s.articleResolver.Search,
 			},
+			"autocomplete": &graphql.Field{
+				Type:        graphql.NewList(SearchResultGraphQL),
+				Description: "Autocomplete for Query Football Club",
+				Args: graphql.FieldConfigArgument{
+					"keyword": &graphql.ArgumentConfig{
+						Type: graphql.String,
+					},
+				},
+				Resolve: s.articleResolver.Autocomplete,
+			},
 		},
 	}
 
