@@ -47,7 +47,7 @@ func (s Schema) Query() *graphql.Object {
 	objectConfig := graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
-			"search": &graphql.Field{
+			"Search": &graphql.Field{
 				Type:        graphql.NewList(SearchResultGraphQL),
 				Description: "Search Football Club",
 				Args: graphql.FieldConfigArgument{
@@ -66,7 +66,7 @@ func (s Schema) Query() *graphql.Object {
 				},
 				Resolve: s.articleResolver.Search,
 			},
-			"autocomplete": &graphql.Field{
+			"Autocomplete": &graphql.Field{
 				Type:        graphql.NewList(SearchResultGraphQL),
 				Description: "Autocomplete for Query Football Club",
 				Args: graphql.FieldConfigArgument{
