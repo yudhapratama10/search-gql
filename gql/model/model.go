@@ -1,9 +1,9 @@
 package model
 
-type Product struct {
-	ID          int      `json:"id"`
+type FootballClub struct {
+	Id          int      `json:"id"`
 	Name        string   `json:"name"`
-	Category    []string `json:"category"`
+	Tournaments []string `json:"tournaments"`
 	HasStadium  bool     `json:"has_stadium"`
 	Description string   `json:"description"`
 	Rating      float64  `json:"rating"`

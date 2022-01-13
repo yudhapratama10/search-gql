@@ -10,8 +10,8 @@ type footballUsecase struct {
 }
 
 type FootballUsecaseContract interface {
-	Search(keyword string, isPreOrder bool, page, take int) ([]model.Product, error)
-	Autocomplete(keyword string) ([]model.Product, error)
+	Search(keyword string, isPreOrder bool, page, take int) ([]model.FootballClub, error)
+	Autocomplete(keyword string) ([]model.FootballClub, error)
 }
 
 func NewFootballUsecase(repo repository.FootballRepositoryContract) FootballUsecaseContract {

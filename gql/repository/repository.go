@@ -12,12 +12,11 @@ import (
 // Service Base URL
 var baseURL string = "http://localhost:8080"
 
-func (repo *footballRepository) Search(keyword string, hasStadium bool, page, take int) ([]model.Product, error) {
+func (repo *footballRepository) Search(keyword string, hasStadium bool, page, take int) ([]model.FootballClub, error) {
 	var err error
-	var client = &http.Client{}
-	var res []model.Product
+	var res []model.FootballClub
 
-	// req, err := json.Marshal(model.ProductParams{
+	// req, err := json.Marshal(model.FootballClubParams{
 	// 	Keyword:    keyword,
 	// 	HasStadium: hasStadium,
 	// 	Page:       page,
@@ -33,11 +32,12 @@ func (repo *footballRepository) Search(keyword string, hasStadium bool, page, ta
 	params := "keyword=" + url.QueryEscape(keyword) + "&hasstadium=" + strconv.FormatBool(hasStadium) + "&page=" + strconv.Itoa(page) + "&take=" + strconv.Itoa(take)
 
 	request, err := http.NewRequest("GET", baseURL+"/search?"+params, nil)
+	// fmt.Println(err)
 	if err != nil {
 		return nil, err
 	}
 
-	response, err := client.Do(request)
+	response, err := repo.http.Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -51,23 +51,9 @@ func (repo *footballRepository) Search(keyword string, hasStadium bool, page, ta
 	return res, nil
 }
 
-func (repo *footballRepository) Autocomplete(keyword string) ([]model.Product, error) {
+func (repo *footballRepository) Autocomplete(keyword string) ([]model.FootballClub, error) {
 	var err error
-	var client = &http.Client{}
-	var res []model.Product
-
-	// req, err := json.Marshal(model.ProductParams{
-	// 	Keyword:    keyword,
-	// 	HasStadium: hasStadium,
-	// 	Page:       page,
-	// 	Take:       take,
-	// })
-
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// request, err := http.NewRequest("GET", baseURL+"/search", bytes.NewBuffer(req))
+	var res []model.FootballClub
 
 	params := "keyword=" + url.QueryEscape(keyword)
 
@@ -76,7 +62,7 @@ func (repo *footballRepository) Autocomplete(keyword string) ([]model.Product, e
 		return nil, err
 	}
 
-	response, err := client.Do(request)
+	response, err := repo.http.Do(request)
 	if err != nil {
 		return nil, err
 	}

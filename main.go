@@ -12,7 +12,10 @@ import (
 )
 
 func main() {
-	repo := repository.NewFootballRepository()
+	client := &http.Client{}
+
+	// Initialize Repo, Usecase, & Schema Layer
+	repo := repository.NewFootballRepository(client)
 	usecase := usecase.NewFootballUsecase(repo)
 	schema := delivery.NewSchema(delivery.NewResolver(usecase))
 
