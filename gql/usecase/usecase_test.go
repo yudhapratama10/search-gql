@@ -25,7 +25,7 @@ func TestAutocomplete(t *testing.T) {
 			keyword = "Newc"
 		)
 
-		repo := new(repository.FootaballMock)
+		repo := new(repository.FootaballRepositoryMock)
 		uc := NewFootballUsecase(repo)
 
 		repo.On("Autocomplete", keyword).Return(data, nil)

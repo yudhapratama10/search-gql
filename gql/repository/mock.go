@@ -19,17 +19,17 @@ func (h HTTPClientMock) Do(r *http.Request) (*http.Response, error) {
 
 //======================================================================
 
-type FootaballMock struct {
+type FootaballRepositoryMock struct {
 	mock.Mock
 }
 
-func (f *FootaballMock) Search(keyword string, hasStadium bool, page, take int) ([]model.FootballClub, error) {
+func (f *FootaballRepositoryMock) Search(keyword string, hasStadium bool, page, take int) ([]model.FootballClub, error) {
 	args := f.Called(keyword, hasStadium, page, take)
 
 	return args.Get(0).([]model.FootballClub), args.Error(1)
 }
 
-func (f *FootaballMock) Autocomplete(keyword string) ([]model.FootballClub, error) {
+func (f *FootaballRepositoryMock) Autocomplete(keyword string) ([]model.FootballClub, error) {
 	args := f.Called(keyword)
 
 	return args.Get(0).([]model.FootballClub), args.Error(1)
